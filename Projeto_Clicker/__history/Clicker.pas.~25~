@@ -1,0 +1,88 @@
+unit Clicker;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.jpeg,
+  Vcl.StdCtrls, Vcl.Imaging.pngimage, Vcl.ComCtrls;
+
+type
+  TForm3 = class(TForm)
+    PageControl1: TPageControl;
+    Clicador: TTabSheet;
+    Loja: TTabSheet;
+    Panel1: TPanel;
+    Clicker: TImage;
+    Counter: TLabel;
+    Loja_panel: TPanel;
+    More_clicks_title: TLabel;
+    Store_session_1: TPanel;
+    More_clicks_description: TLabel;
+    Store_session_2: TPanel;
+    Auto_click_title: TLabel;
+    Auto_click_description: TLabel;
+    Buy_auto_clicker: TButton;
+    Buy_more_clicks: TButton;
+    procedure ClickerClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Buy_more_clicksclick(Sender: TObject);
+    procedure Buy_auto_clickerClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    var count, X : integer;
+    price_up, more_clicks_price, auto_clicker_price : double
+
+  end;
+
+var
+  Form3: TForm3;
+
+implementation
+
+{$R *.dfm}
+
+
+procedure TForm3.Buy_auto_clickerClick(Sender: TObject);
+begin
+if count < auto_clicker_price  then begin
+  ShowMessage('Sem saldo suficiente!');
+end else if count >= auto_clicker_price then begin
+  count := count - trunc(auto_clicker_price);
+  counter.Caption := inttostr(count);
+  auto_clicker_price := trunc(auto_clicker_price * 1.5);
+  Buy_auto_clicker.caption := '$' + auto_clicker_price.ToString();
+  X := X + 1;
+end;
+end;
+
+procedure TForm3.Buy_more_clicksclick(Sender: TObject);
+begin
+if count < more_clicks_price  then begin
+  ShowMessage('Sem saldo suficiente!');
+end else if count >= more_clicks_price then begin
+  count := count - trunc(more_clicks_price);
+  counter.Caption := inttostr(count);
+  more_clicks_price := trunc(more_clicks_price * 1.5);
+  buy_more_clicks.caption := '$' + more_clicks_price.ToString();
+  X := X + 1;
+end;
+end;
+
+procedure TForm3.ClickerClick(Sender: TObject);
+begin
+count := count + X;
+counter.Caption := inttostr(count);
+//ShowMessage(count.toString());
+end;
+
+procedure TForm3.FormCreate(Sender: TObject);
+begin
+count:= 79;
+X := 1;
+more_clicks_price := 10;
+end;
+
+end.
